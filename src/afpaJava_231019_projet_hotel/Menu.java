@@ -16,6 +16,10 @@ public class Menu {
 								  "F: Réserver une chambre",
 								  "G: Libérer une chambre", 
 								  " ", 
+								  "H : Afficher liste réservations",
+								  "I : Afficher liste clients",
+								  "J : Afficher liste des chambres",
+								  " ",
 								  "Q: Quitter" 
 								};
 
@@ -48,12 +52,23 @@ public class Menu {
 			break;
 		case "f": 
 			menu6();
-			break;
+			break;			
 		case "g": 
 			menu7();
 			break;
-		case "q":
+		case "h": 
 			menu8();
+			break;
+		case "i": 
+			menu9();
+			break;			
+		case "j": 
+			menu10();
+			break;
+			
+			
+		case "q":
+			menuQ();
 			break;
 		}
 	}
@@ -67,7 +82,7 @@ public class Menu {
 	// propostiion retour menuu principal (ENTER)
 	static void retour() {
 		System.out.println("(Retour : Enter)");
-		String s = scan.nextLine();
+		scan.nextLine();
 		afficherMenu("");
 	}
 	
@@ -132,14 +147,14 @@ public class Menu {
 	// afficher nombre de chambres réservées
 	static void menu2() {
 		cls();
-		System.out.println("Nb de chambres réservées : " + Chambre.nbChambresReservees());
+		System.out.println("Nb de chambres réservées : " + Hotel.nbChambresReservees());
 		retour();
 	}
 
 	// afficher nombre de chambres libres
 	static void menu3() {
 		cls();
-		System.out.println("Nb de chambres libres    : " + Chambre.nbChambresLibres());
+		System.out.println("Nb de chambres libres    : " + Hotel.nbChambresLibres());
 		retour();
 	}
 
@@ -148,7 +163,7 @@ public class Menu {
 		cls();
 		selectionType();
 		String choixType = typeSelectionne();
-		String res = Chambre.numPremiereChambreVide(choixType) == 999 ? "Aucune chambre libre type " + choixType : Integer.toString(Chambre.numPremiereChambreVide(choixType));
+		String res = Hotel.numPremiereChambreVide(choixType) == 999 ? "Aucune chambre libre type " + choixType : Integer.toString(Hotel.numPremiereChambreVide(choixType));
 		System.out.println("N° première chambre vide (type " + choixType + ")\t: " + res);
 		retour();
 	}
@@ -158,14 +173,15 @@ public class Menu {
 		cls();
 		selectionType();
 		String choixType = typeSelectionne();
-		String res = Chambre.numDerniereChambreOccupee(choixType) == 999 ? "Aucune chambre occupée type " + choixType : Integer.toString(Chambre.numDerniereChambreOccupee(choixType));
+		String res = Hotel.numDerniereChambreOccupee(choixType) == 999 ? "Aucune chambre occupée type " + choixType : Integer.toString(Hotel.numDerniereChambreOccupee(choixType));
 		System.out.println("N° dernière chambre occupée (type " + choixType + ")\t: " + res);
 		retour();
 	}
 	
 	
 	// réserver première chambre vide avec authentification
-	// ======================== il faut gérer le cas où il n'y a pas de chambre vide ==============================
+	// ========================  gérer le cas où il n'y a pas de chambre vide 
+	// ========================  gérer le cas nouveau client
 	static void menu6() {
 		cls();
 		System.out.println("Entrer identifiant : ");
@@ -174,10 +190,22 @@ public class Menu {
 		String mdp = scan.nextLine().toLowerCase();
 		if (loginOk(user, mdp) == true) {
 			// réservation chambre
+			Hotel.afficherListeDesClients();			
+			System.out.println("Entrer n° client : 999 = nouveau");
+			int nClient = scan.nextInt();
+			Client client = Hotel.listeDesClients.get(nClient);
+			System.out.println("Nombre de personne(s) :");
+			int nbPersonnes = scan.nextInt(); scan.nextLine();
 			selectionType();
 			String choixType = typeSelectionne();
-			System.out.println("Chambre n°" + Chambre.numPremiereChambreVide(choixType) + " réservée.");
-			Chambre.reserverChambre(Chambre.numPremiereChambreVide(choixType));
+			Chambre chambre = Hotel.listeDesChambres.get(Hotel.numPremiereChambreVide(choixType));  
+			double montant = nbPersonnes * chambre.getTarif();
+			String date = "2023-01-19";
+			int id = Hotel.listeDesReservations.size();
+			new Reservation(id, date, client, chambre, nbPersonnes, montant);
+			System.out.println("Chambre n°" + chambre.getNum() + " réservée.");
+			System.out.println(Hotel.listeDesReservations.get(Hotel.listeDesReservations.size()-1).toStr());
+			Hotel.reserverChambre(chambre.getNum());
 		} else {
 			System.out.println("Identification échouée.");
 		}
@@ -196,16 +224,34 @@ public class Menu {
 			// réservation chambre
 			selectionType();
 			String choixType = typeSelectionne();
-			System.out.println("Chambre n°" + Chambre.numDerniereChambreOccupee(choixType) + " libérée.");
-			Chambre.libererChambre(Chambre.numDerniereChambreOccupee(choixType));
+			System.out.println("Chambre n°" + Hotel.numDerniereChambreOccupee(choixType) + " libérée.");
+			Hotel.libererChambre(Hotel.numDerniereChambreOccupee(choixType));
 		} else {
 			System.out.println("Identification échouée.");
 		}
 		retour();
 	}
 	
-
 	static void menu8() {
+		cls();
+		Hotel.afficherListeDesReservations();
+		retour();
+	}
+	
+	static void menu9() {
+		cls();
+		Hotel.afficherListeDesClients();
+		retour();
+	}
+	
+	static void menu10() {
+		cls();
+		Hotel.afficherListeDesChambres();
+		retour();
+	}
+	
+
+	static void menuQ() {
 		cls();
 		System.out.println("Au revoir.");
 		System.exit(0);
