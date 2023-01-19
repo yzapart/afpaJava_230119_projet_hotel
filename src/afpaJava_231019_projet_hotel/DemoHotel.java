@@ -13,6 +13,7 @@ public class DemoHotel {
 		creationClients();
 //		Hotel.afficherListeDesClients();		
 
+		// --- ! --- gérer les conflits de réservation ------------------
 		creationReservations(10);
 //		Hotel.afficherListeDesReservations();
 
