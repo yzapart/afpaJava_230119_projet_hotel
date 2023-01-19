@@ -44,18 +44,18 @@ public class DemoHotel {
 	
 	// création clients
 	public static void creationClients() {
-		String[] listeNom = {
-				"Randall Ochoa",
-				"Sarah Lynch",
-				"Louis Bailey",
-				"Michelle Son",
-				"Amanda Simpson",
-				"Yohann Zapart",
-				"Daniel Balav.",
-				"Michel Berger"
+		String[][] listeClients = {
+				{"OVH         ", "société"},
+				{"Google      ","société"},
+				{"KISS        ","groupe"},
+				{"Blondie     ","groupe"},
+				{"Amanda Simpson","personne"},
+				{"Yohann Zapart","personne"},
+				{"Daniel Balav.","personne"},
+				{"Michel Berger","personne"}
 		};
-		for (int i=0; i<listeNom.length; i++) {
-			new Client(i, listeNom[i]);
+		for (int i=0; i<listeClients.length; i++) {
+			new Client(i, listeClients[i][0], listeClients[i][1]);
 		}
 	}
 	
