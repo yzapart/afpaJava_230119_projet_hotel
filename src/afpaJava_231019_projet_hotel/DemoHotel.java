@@ -1,5 +1,5 @@
 package afpaJava_231019_projet_hotel;
-import java.time.*;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class DemoHotel {
@@ -30,7 +30,6 @@ public class DemoHotel {
 	}
 	
 	public static double deuxDecAlea(double min, double max) {
-//		return min + (double)(Math.floor(100 * Math.random() * (max - min) / 100));
 		return (double)(Math.floor(100 * Math.random() * (max-min) ) / 100);
 	}
 	
