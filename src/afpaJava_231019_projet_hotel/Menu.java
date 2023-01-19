@@ -268,6 +268,8 @@ public class Menu {
 		retour();
 	}
 	
+	
+	// état d'une chambre à une date donnée
 	static void menu11() {
 		cls();
 		Hotel.afficherListeDesChambres();
@@ -289,16 +291,17 @@ public class Menu {
 		retour();
 	}
 	
+	
+	// calcul des loyers et CA
 	static void menu12() {
 		cls();
 		int CA = 0;
-		int loyer = 0;
 		for (Reservation r: Hotel.listeDesReservations) {
 			List<LocalDate> listeDates = r.getDateArr().datesUntil(r.getDateDep()).collect(Collectors.toList());
 			for (LocalDate date: listeDates) {
+				int loyer = 0;
 				if (Hotel.existeReservationChambreDate(r.getChambre(), date) == true) {
 					loyer = Hotel.reservationChambreDate(r.getChambre(), date).getNbPersonnes() * r.getChambre().getTarif();
-					CA += loyer;
 					System.out.println("Réservation n° " + r.getId() + "\tChambre n°" + r.getChambre().getNum() + "\tDate : " + date + "\tLoyer : " + loyer);
 				}
 				CA += loyer;
