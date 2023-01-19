@@ -71,7 +71,7 @@ public class DemoHotel {
 			Client client = Hotel.listeDesClients.get(nAlea(0, Hotel.listeDesClients.size()));
 			Chambre chambre = Hotel.listeDesChambres.get(nAlea(0, Hotel.listeDesChambres.size()));
 			int nbPersonnes = nAlea(1, 4);
-			LocalDate dateArr = LocalDate.of(2022, 1, 1).plusDays(nAlea(1, 365));
+			LocalDate dateArr = LocalDate.of(nAlea(2022, 2024)-1, 1, 1).plusDays(nAlea(1, 365*2));
 			LocalDate dateDep = dateArr.plusDays(nAlea(1, 7));	
 			double montant = nbPersonnes*chambre.getTarif()*ChronoUnit.DAYS.between(dateArr, dateDep);		
 			

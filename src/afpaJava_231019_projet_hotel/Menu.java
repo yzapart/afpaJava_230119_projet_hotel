@@ -295,9 +295,11 @@ public class Menu {
 	// calcul des loyers et CA
 	static void menu12() {
 		cls();
+		System.out.println("Année du CA à calculer :");
+		int year = scan.nextInt(); scan.nextLine();
 		int CA = 0;
 		for (Reservation r: Hotel.listeDesReservations) {
-			List<LocalDate> listeDates = r.getDateArr().datesUntil(LocalDate.of(2023, 01, 01)).collect(Collectors.toList());
+			List<LocalDate> listeDates = LocalDate.of(year, 01, 01).datesUntil(LocalDate.of(year+1, 01, 01)).collect(Collectors.toList());
 			for (LocalDate date: listeDates) {
 				int loyer = 0;
 				if (Hotel.existeReservationChambreDate(r.getChambre(), date) == true) {
@@ -307,7 +309,7 @@ public class Menu {
 				CA += loyer;
 			}
 		}
-		System.out.println("CA 2022 : " + CA + " €");
+		System.out.println("CA " + year + " : " + CA + " €");
 		retour();
 	}
 
