@@ -110,7 +110,6 @@ public class Menu {
 	
 	static String typeSelectionne() {
 		String choixType = scan.nextLine().toLowerCase();
-		System.out.println("choixType : "+ choixType);
 		switch (choixType) {
 		case "a":
 			choixType = "single";
@@ -214,11 +213,12 @@ public class Menu {
 			selectionType();
 			String choixType = typeSelectionne();
 			Chambre chambre = Hotel.listeDesChambres.get(Hotel.numPremiereChambreVide(choixType));  
-			double montant = nbPersonnes * chambre.getTarif();
 			System.out.println("Date d'entrée : (format AAAA-MM-JJ)");
 			LocalDate dateArr = LocalDate.parse(scan.nextLine());
 			System.out.println("Nombre de nuits : ");
-			LocalDate dateDep = dateArr.plusDays(scan.nextInt()); scan.nextLine();
+			int nbNuits = scan.nextInt(); scan.nextLine();
+			LocalDate dateDep = dateArr.plusDays(nbNuits);
+			double montant = nbPersonnes * nbNuits * chambre.getTarif();
 			int id = Hotel.listeDesReservations.size();
 			new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);
 			System.out.println("Chambre n°" + chambre.getNum() + " réservée.");
@@ -297,7 +297,7 @@ public class Menu {
 		cls();
 		int CA = 0;
 		for (Reservation r: Hotel.listeDesReservations) {
-			List<LocalDate> listeDates = r.getDateArr().datesUntil(r.getDateDep()).collect(Collectors.toList());
+			List<LocalDate> listeDates = r.getDateArr().datesUntil(LocalDate.of(2023, 01, 01)).collect(Collectors.toList());
 			for (LocalDate date: listeDates) {
 				int loyer = 0;
 				if (Hotel.existeReservationChambreDate(r.getChambre(), date) == true) {

@@ -14,7 +14,7 @@ public class DemoHotel {
 //		Hotel.afficherListeDesClients();		
 
 		// --- ! --- gérer les conflits de réservation ------------------
-		creationReservations(10);
+		creationReservations(0);
 //		Hotel.afficherListeDesReservations();
 
 		Menu.afficherMenu("");
