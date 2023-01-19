@@ -51,7 +51,7 @@ public class Reservation {
 	
 	
 	public String toStr() {
-		return "Réservation n° " + id + "\t" + client.getNom() + "\tChambre n° " + chambre.getNum() + "\t" + nbPersonnes + "pers.\tA: "  + dateArr + "\tD: " + dateDep + "\tMontant : " + montant;
+		return "Réservation n° " + id + "\t" + client.getType() + " : " + client.getNom() + "\tChambre n° " + chambre.getNum() + "\t" + nbPersonnes + "pers.\tA: "  + dateArr + "\tD: " + dateDep + "\tMontant : " + montant + " €";
 	}
 	
 }

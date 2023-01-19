@@ -8,14 +8,11 @@ public class DemoHotel {
 	public static void main(String[] args) {
 
 		creationChambres(N_CHAMBRES);
-//		Hotel.afficherListeDesChambres();
 		
 		creationClients();
-//		Hotel.afficherListeDesClients();		
 
-		// --- ! --- gérer les conflits de réservation ------------------
 		creationReservations(20);
-//		Hotel.afficherListeDesReservations();
+		// --- ! --- gérer les conflits de réservation ------------------
 
 		Menu.afficherMenu("");
 		
@@ -51,14 +48,14 @@ public class DemoHotel {
 	// création clients
 	public static void creationClients() {
 		String[][] listeClients = {
-				{"OVH         ", "société"},
-				{"Google      ","société"},
-				{"KISS        ","groupe"},
-				{"Blondie     ","groupe"},
-				{"Amanda Simpson","personne"},
-				{"Yohann Zapart","personne"},
-				{"Daniel Balav.","personne"},
-				{"Michel Berger","personne"}
+				{"OVH         ", "soc."},
+				{"Google      ","soc."},
+				{"KISS        ","grp."},
+				{"Blondie     ","grp."},
+				{"Amanda Simpson","prs."},
+				{"Yohann Zapart","prs."},
+				{"Daniel Balav.","prs."},
+				{"Michel Berger","prs."}
 		};
 		for (int i=0; i<listeClients.length; i++) {
 			new Client(i, listeClients[i][0], listeClients[i][1]);

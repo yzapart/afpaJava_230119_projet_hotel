@@ -24,7 +24,7 @@ public class Menu {
 								  "J : Afficher liste des chambres",
 								  " ",
 								  "K : Etat d'une chambre à une date",
-								  "L : Chiffre d'affaires 2022",
+								  "L : Chiffre d'affaires",
 								  " ",
 								  "Q: Quitter",
 								  "--- ! --- il peut y avoir des conflits dans la génération aléatoire des réservations --- ! ---"
@@ -304,7 +304,7 @@ public class Menu {
 				int loyer = 0;
 				if (Hotel.existeReservationChambreDate(r.getChambre(), date) == true) {
 					loyer = Hotel.reservationChambreDate(r.getChambre(), date).getNbPersonnes() * r.getChambre().getTarif();
-					System.out.println("Réservation n° " + r.getId() + "\tChambre n°" + r.getChambre().getNum() + "\tDate : " + date + "\tLoyer : " + loyer);
+					System.out.println("Réservation n° " + r.getId() + "\t" + r.getClient().getType() + " : " + r.getClient().getNom() +  "\tChambre n°" + r.getChambre().getNum() + "\tDate : " + date + "\tLoyer : " + loyer + " €");
 				}
 				CA += loyer;
 			}

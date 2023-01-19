@@ -19,6 +19,10 @@ public class Client {
 	public String getNom() {
 		return nom;
 	}
+	
+	public String getType() {
+		return type;
+	}
 
 	public String toStr() {
 		return "Client n°" + id + "\t" + nom + "\t" + type; 
