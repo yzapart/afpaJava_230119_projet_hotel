@@ -4,24 +4,13 @@ import java.lang.Math;
 import java.util.ArrayList;
 
 public class DemoHotel {
-	static String listeType[] = { "single", "twin", "double", "suite" };
 	static int N_CHAMBRES = 20;
 
 	public static void main(String[] args) {
 
-		creationChambres(N_CHAMBRES);
+		Chambre.creationChambres(N_CHAMBRES);
 		Menu.afficherMenu("");
 
-		
-	}
-
-	public static void creationChambres(int n) {
-		// Création aléatoire de n chambres.
-		for (int i = 0; i < n; i++) {
-			Boolean etat = (int) Math.floor(Math.random() * 2) == 0 ? false : true;
-			String type = listeType[(int) Math.floor(Math.random() * 4)];
-			new Chambre(Chambre.listeDesChambres.size(), type, etat);
-		}
 	}
 
 	public static void tests() {
@@ -31,7 +20,7 @@ public class DemoHotel {
 		// Est-ce qu'il vaut mieux inclure le test si une chambre est disponible dans la
 		// méthode numPremoièreChambreVide de la classe Chambre ?
 		// Dans ce cas celle-ci retournerait une valeur String.
-		for (String type : listeType) {
+		for (String type : Chambre.listeType) {
 			String res = Chambre.numPremiereChambreVide(type) == 999 ? "Aucune chambre libre"
 					: Integer.toString(Chambre.numPremiereChambreVide(type));
 			System.out.println("N° première chambre vide (type " + type + ")\t: " + res);
@@ -39,7 +28,7 @@ public class DemoHotel {
 		System.out.println(("---"));
 
 		// Affichage dernière chambre vide de chaque type
-		for (String type : listeType) {
+		for (String type : Chambre.listeType) {
 			String res = Chambre.numDerniereChambreVide(type) == 999 ? "Aucune chambre libre"
 					: Integer.toString(Chambre.numDerniereChambreVide(type));
 			System.out.println("N° dernière chambre vide (type " + type + ")\t: " + res);

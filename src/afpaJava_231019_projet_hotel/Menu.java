@@ -149,7 +149,7 @@ public class Menu {
 		selectionType();
 		String choixType = typeSelectionne();
 		String res = Chambre.numPremiereChambreVide(choixType) == 999 ? "Aucune chambre libre type " + choixType : Integer.toString(Chambre.numPremiereChambreVide(choixType));
-		System.out.println("N° première chambre vide (choixType " + choixType + ")\t: " + res);
+		System.out.println("N° première chambre vide (type " + choixType + ")\t: " + res);
 		retour();
 	}
 	
@@ -159,7 +159,7 @@ public class Menu {
 		selectionType();
 		String choixType = typeSelectionne();
 		String res = Chambre.numDerniereChambreOccupee(choixType) == 999 ? "Aucune chambre occupée type " + choixType : Integer.toString(Chambre.numDerniereChambreOccupee(choixType));
-		System.out.println("N° dernière chambre occupée (choixType " + choixType + ")\t: " + res);
+		System.out.println("N° dernière chambre occupée (type " + choixType + ")\t: " + res);
 		retour();
 	}
 	
