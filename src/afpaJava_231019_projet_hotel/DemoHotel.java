@@ -20,6 +20,9 @@ public class DemoHotel {
 		System.out.println(("---"));
 		
 		
+		
+		// Est-ce qu'il vaut mieux inclure le test si une chambre est disponible dans la méthode numPremoièreChambreVide de la classe Chambre ?
+		// Dans ce cas celle-ci retournerait une valeur String.
 		for (String type: listeType) {
 			String res = Chambre.numPremiereChambreVide(type) == 999 ? "Aucune chambre libre" : Integer.toString(Chambre.numDerniereChambreVide(type));
 			System.out.println("N° première chambre vide (type " + type + ")\t: " + res);

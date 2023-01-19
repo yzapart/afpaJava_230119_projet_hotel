@@ -28,7 +28,8 @@ public class Chambre {
 	public String toStr() {
 		return "Chambre n°" + num + "\tType : " + type + "\tOccupée : " + etat;
 	}
-
+	
+	// Est-i préférable de déclarer cette liste dans la classe Hotel ?
 	// liste de l'ensemble des chambres
 	public static ArrayList<Chambre> listeDesChambres = new ArrayList<Chambre>();
 	public static void afficherListeDesChambres() {
