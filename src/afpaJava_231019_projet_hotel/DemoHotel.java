@@ -1,5 +1,6 @@
 package afpaJava_231019_projet_hotel;
-
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 
 public class DemoHotel {
 	static int N_CHAMBRES = 20;
@@ -16,6 +17,10 @@ public class DemoHotel {
 //		Hotel.afficherListeDesReservations();
 
 		Menu.afficherMenu("");
+		
+		
+		
+		
 		
 	}
 
@@ -62,13 +67,14 @@ public class DemoHotel {
 	//création n réservations
 	public static void creationReservations(int n) {
 		for (int id = 0; id < n; id++) {
-			String date = "2023-" + nAlea(1, 13) + "-" + nAlea(1, 31);
 			Client client = Hotel.listeDesClients.get(nAlea(0, Hotel.listeDesClients.size()));
 			Chambre chambre = Hotel.listeDesChambres.get(nAlea(0, Hotel.listeDesChambres.size()));
 			int nbPersonnes = nAlea(1, 4);
-			double montant = nbPersonnes*chambre.getTarif();
+			LocalDate dateArr = LocalDate.of(2022, 1, 1).plusDays(nAlea(1, 365));
+			LocalDate dateDep = dateArr.plusDays(nAlea(1, 7));	
+			double montant = nbPersonnes*chambre.getTarif()*ChronoUnit.DAYS.between(dateArr, dateDep);		
 			
-			new Reservation(id, date, client, chambre, nbPersonnes, montant);
+			new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);
 		}
 	}
 	

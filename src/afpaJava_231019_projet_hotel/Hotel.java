@@ -1,5 +1,6 @@
 package afpaJava_231019_projet_hotel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Hotel {
@@ -112,6 +113,32 @@ public class Hotel {
 			if (c.getNum() == num)
 				c.setEtat(false);
 		}
+	}
+	
+	public static boolean dateIncluse(LocalDate date, LocalDate dateInf, LocalDate dateSup) {
+		if (date.isAfter(dateInf.minusDays(1)) && date.isBefore(dateSup)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean existeReservationChambreDate(Chambre chambre, LocalDate date) {
+		for (Reservation r: listeDesReservations) {
+			if (r.getChambre().equals(chambre) && dateIncluse(date, r.getDateArr(), r.getDateDep())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static Reservation reservationChambreDate(Chambre chambre, LocalDate date) {
+		for (Reservation r: listeDesReservations) {
+			if ((r.getChambre().equals(chambre) == true) && (dateIncluse(date, r.getDateArr(), r.getDateDep()) == true)) {
+				return r;
+			}
+		}
+		return null;
 	}
 
 }

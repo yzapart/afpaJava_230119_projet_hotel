@@ -1,16 +1,19 @@
 package afpaJava_231019_projet_hotel;
 
+import java.time.LocalDate;
+
 public class Reservation {
 
 	private int id, nbPersonnes;
-	private String date;
+	private LocalDate dateArr, dateDep;
 	private Client client;
 	private Chambre chambre;
 	private double montant;
 	
-	public Reservation(int id, String date, Client client, Chambre chambre, int nbPersonnes , double montant) {
+	public Reservation(int id, Client client, Chambre chambre, int nbPersonnes, LocalDate dateArr, LocalDate dateDep, double montant) {
 		this.id = id;
-		this.date = date;
+		this.dateArr = dateArr;
+		this.dateDep = dateDep;
 		this.client = client;
 		this.chambre = chambre;
 		this.montant = montant;
@@ -18,8 +21,37 @@ public class Reservation {
 		Hotel.listeDesReservations.add(this);
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public LocalDate getDateArr() {
+		return dateArr;
+	}
+	
+	public LocalDate getDateDep() {
+		return dateDep;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
+	
+	public Chambre getChambre() {
+		return chambre;
+	}
+	
+	public double getMontant() {
+		return montant;
+	}
+
+	public int getNbPersonnes() {
+		return nbPersonnes;
+	}
+	
+	
 	public String toStr() {
-		return "Réservation n° " + id + "\t" + client.getNom() + "\tChambre n° " + chambre.getNum() + "\t" + nbPersonnes + "pers.\t"  + date + "\tMontant : " + montant;
+		return "Réservation n° " + id + "\t" + client.getNom() + "\tChambre n° " + chambre.getNum() + "\t" + nbPersonnes + "pers.\tA: "  + dateArr + "\tD: " + dateDep + "\tMontant : " + montant;
 	}
 	
 }

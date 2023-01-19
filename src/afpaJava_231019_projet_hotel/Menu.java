@@ -1,7 +1,10 @@
 package afpaJava_231019_projet_hotel;
 
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Menu {
 
@@ -16,11 +19,16 @@ public class Menu {
 								  "F: Réserver une chambre",
 								  "G: Libérer une chambre", 
 								  " ", 
-								  "H : Afficher liste réservations",
+								  "H : Afficher liste réservations -------- cas à traiter",
 								  "I : Afficher liste clients",
 								  "J : Afficher liste des chambres",
 								  " ",
-								  "Q: Quitter" 
+								  "K : Etat d'une chambre à une date",
+								  "L : Chiffre d'affaires 2022",
+								  " ",
+								  "Q: Quitter",
+								  "--- ! --- il peut y avoir des conflits dans la génération aléatoire des réservations --- ! ---"
+								  
 								};
 
 	
@@ -64,6 +72,12 @@ public class Menu {
 			break;			
 		case "j": 
 			menu10();
+			break;
+		case "k":
+			menu11();
+			break;
+		case "l":
+			menu12();
 			break;
 			
 			
@@ -182,6 +196,7 @@ public class Menu {
 	// réserver première chambre vide avec authentification
 	// ========================  gérer le cas où il n'y a pas de chambre vide 
 	// ========================  gérer le cas nouveau client
+	// ========================  gérer conflit dates
 	static void menu6() {
 		cls();
 		System.out.println("Entrer identifiant : ");
@@ -200,9 +215,12 @@ public class Menu {
 			String choixType = typeSelectionne();
 			Chambre chambre = Hotel.listeDesChambres.get(Hotel.numPremiereChambreVide(choixType));  
 			double montant = nbPersonnes * chambre.getTarif();
-			String date = "2023-01-19";
+			System.out.println("Date d'entrée : (format AAAA-MM-JJ)");
+			LocalDate dateArr = LocalDate.parse(scan.nextLine());
+			System.out.println("Nombre de nuits : ");
+			LocalDate dateDep = dateArr.plusDays(scan.nextInt()); scan.nextLine();
 			int id = Hotel.listeDesReservations.size();
-			new Reservation(id, date, client, chambre, nbPersonnes, montant);
+			new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);
 			System.out.println("Chambre n°" + chambre.getNum() + " réservée.");
 			System.out.println(Hotel.listeDesReservations.get(Hotel.listeDesReservations.size()-1).toStr());
 			Hotel.reserverChambre(chambre.getNum());
@@ -250,6 +268,45 @@ public class Menu {
 		retour();
 	}
 	
+	static void menu11() {
+		cls();
+		Hotel.afficherListeDesChambres();
+		System.out.println("Entrer n° de chambre : ");
+		int numChambre = scan.nextInt(); scan.nextLine();
+		Chambre chambre = Hotel.listeDesChambres.get(numChambre);
+		System.out.println("Date :");
+		LocalDate date = LocalDate.parse(scan.nextLine());
+		
+		double loyer = 0; 
+		if (Hotel.existeReservationChambreDate(chambre, date) == true){
+			System.out.println(Hotel.reservationChambreDate(chambre, date).toStr());
+			loyer = Hotel.reservationChambreDate(chambre, date).getNbPersonnes() * chambre.getTarif();  
+		} else {
+			System.out.println("Chambre n°" + numChambre + " inoccupée le " + date);
+		}
+		System.out.println("Loyer : " + loyer + " €");
+		
+		retour();
+	}
+	
+	static void menu12() {
+		cls();
+		int CA = 0;
+		int loyer = 0;
+		for (Reservation r: Hotel.listeDesReservations) {
+			List<LocalDate> listeDates = r.getDateArr().datesUntil(r.getDateDep()).collect(Collectors.toList());
+			for (LocalDate date: listeDates) {
+				if (Hotel.existeReservationChambreDate(r.getChambre(), date) == true) {
+					loyer = Hotel.reservationChambreDate(r.getChambre(), date).getNbPersonnes() * r.getChambre().getTarif();
+					CA += loyer;
+					System.out.println("Réservation n° " + r.getId() + "\tChambre n°" + r.getChambre().getNum() + "\tDate : " + date + "\tLoyer : " + loyer);
+				}
+				CA += loyer;
+			}
+		}
+		System.out.println("CA 2022 : " + CA + " €");
+		retour();
+	}
 
 	static void menuQ() {
 		cls();
