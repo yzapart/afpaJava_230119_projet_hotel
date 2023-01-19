@@ -17,15 +17,18 @@ public class DemoHotel {
 		Chambre.afficherListeDesChambres();
 		System.out.println("Nb de chambres réservées : " + Chambre.nbChambresReservees());
 		System.out.println("Nb de chambres libres    : " + Chambre.nbChambresLibres());
+		System.out.println(("---"));
 		
 		
 		for (String type: listeType) {
-			System.out.println("N° première chambre vide (type " + type + ")\t:" + Chambre.numPremiereChambreVide(type));
+			String res = Chambre.numPremiereChambreVide(type) == 999 ? "Aucune chambre libre" : Integer.toString(Chambre.numDerniereChambreVide(type));
+			System.out.println("N° première chambre vide (type " + type + ")\t: " + res);
 		}
 		System.out.println(("---"));
 
 		for (String type: listeType) {
-			System.out.println("N° dernière chambre vide (type " + type + ")\t:" + Chambre.numDerniereChambreVide(type));
+			String res = Chambre.numDerniereChambreVide(type) == 999 ? "Aucune chambre libre" : Integer.toString(Chambre.numDerniereChambreVide(type));
+			System.out.println("N° dernière chambre vide (type " + type + ")\t: " + res);
 		}
 		System.out.println(("---"));
 		
