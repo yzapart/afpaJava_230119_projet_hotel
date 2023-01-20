@@ -12,23 +12,22 @@ public class Menu {
 								  " ", 
 								  "B: Afficher le nombre de chambres réservées",
 								  "C: Afficher le nombre de chambres libres", 
-								  " ", 
-								  "D: Afficher le numéro de la première chambre vide",
-								  "E: Afficher le numéro de la dernière chambre occupée", 
+//								  " ", 
+//								  "D: Afficher le numéro de la première chambre vide",
+//								  "E: Afficher le numéro de la dernière chambre occupée", 
 								  " ", 
 								  "F: Réserver une chambre",
 								  "G: Libérer une chambre", 
 								  " ", 
 								  "H : Afficher liste réservations",
 								  "I : Afficher liste clients",
-								  "J : Afficher liste des chambres",
+								  "J : Afficher liste des chambres  -- à traiter setEtat() en fontion de la date du jour",
 								  " ",
 								  "K : Etat d'une chambre à une date",
 								  "L : Chiffre d'affaires",
 								  " ",
 								  "Q: Quitter",
 								  " ",
-								  "--- setEtat() des chambres en fontions de la date du jour et de la liste des réservations"
 								  
 								};
 
