@@ -2,6 +2,10 @@ package afpaJava_231019_projet_hotel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hotel {
 	
@@ -34,6 +38,7 @@ public class Hotel {
 	}
 	
 	public static void afficherListeDesReservations() {
+		Collections.sort(listeDesReservations, Comparator.comparing(Reservation::getDateArr));
 		System.out.println("--- Liste des réservations : ---");
 		for (Reservation r : listeDesReservations) {
 			System.out.println(r.toStr());
@@ -140,5 +145,67 @@ public class Hotel {
 		}
 		return null;
 	}
+	
+	
+	public static boolean reservationPossibleChambrePeriode(Chambre chambre, LocalDate dateArr, LocalDate dateDep) {
+		List<LocalDate> listeDatesAVerifier = dateArr.datesUntil(dateDep).collect(Collectors.toList());
+		for (LocalDate dateAVerif: listeDatesAVerifier) {
+			if (existeReservationChambreDate(chambre, dateAVerif) == true) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean reservationPossibleTypePeriode(String type, LocalDate dateArr, LocalDate dateDep) {
+		List<LocalDate> listeDatesAVerifier = dateArr.datesUntil(dateDep).collect(Collectors.toList());
+		for (Chambre chambre: Hotel.listeDesChambres) {
+			if (chambre.getType().equals(type)) {
+				boolean chambreLibre = true;
+				for (LocalDate dateAVerif : listeDatesAVerifier) {
+					if (existeReservationChambreDate(chambre, dateAVerif) == true) {
+						chambreLibre = false;
+					}
+				}
+				if (chambreLibre == true) return true;
+			}
+		}
+		return false;
+	}
+	
+	public static Chambre chambreLibreTypePeriode(String type, LocalDate dateArr, LocalDate dateDep) {
+		List<LocalDate> listeDatesAVerifier = dateArr.datesUntil(dateDep).collect(Collectors.toList());
+		for (Chambre chambre: Hotel.listeDesChambres) {
+			if (chambre.getType().equals(type)) {
+				boolean libre = true;
+				for (LocalDate dateAVerif : listeDatesAVerifier) {
+					if (existeReservationChambreDate(chambre, dateAVerif) == true) {
+						libre = false;
+					}
+				}
+				if (libre == true) return chambre;
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	
+//	public static boolean reservationPossible(Chambre chambre, LocalDate dateArr, LocalDate dateDep) {
+//		List<LocalDate> listeDatesAVerifier = dateArr.datesUntil(dateDep).collect(Collectors.toList());
+//		for (Reservation r: Hotel.listeDesReservations) {
+//			if (r.getChambre().equals(chambre)) {
+//				List<LocalDate> listeDatesOccupées = r.getDateArr().datesUntil(r.getDateDep()).collect(Collectors.toList());
+//				for (LocalDate dateAVerif: listeDatesAVerifier) {
+//					if (listeDatesOccupées.contains(dateAVerif)) {
+//						return false;
+//					}
+//				}
+//				
+//			}
+//		}
+//		return true;
+//	}
 
 }

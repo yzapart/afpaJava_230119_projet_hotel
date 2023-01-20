@@ -27,7 +27,8 @@ public class Menu {
 								  "L : Chiffre d'affaires",
 								  " ",
 								  "Q: Quitter",
-								  "--- ! --- il peut y avoir des conflits dans la génération aléatoire des réservations --- ! ---"
+								  " ",
+								  "--- setEtat() des chambres en fontions de la date du jour et de la liste des réservations"
 								  
 								};
 
@@ -192,10 +193,7 @@ public class Menu {
 	}
 	
 	
-	// réserver première chambre vide avec authentification
-	// ========================  gérer le cas où il n'y a pas de chambre vide 
-	// ========================  gérer le cas nouveau client
-	// ========================  gérer conflit dates
+	// réserver  chambre vide avec authentification
 	static void menu6() {
 		cls();
 		System.out.println("Entrer identifiant : ");
@@ -212,18 +210,25 @@ public class Menu {
 			int nbPersonnes = scan.nextInt(); scan.nextLine();
 			selectionType();
 			String choixType = typeSelectionne();
-			Chambre chambre = Hotel.listeDesChambres.get(Hotel.numPremiereChambreVide(choixType));  
+			// refonder la méthode numPremiereChambreVide(choixtype, dateArr, dateDep)
+			// d'abord checker si un tye de chambre est libre pour une période donnée
+//			Chambre chambre = Hotel.listeDesChambres.get(Hotel.numPremiereChambreVide(choixType));  
 			System.out.println("Date d'entrée : (format AAAA-MM-JJ)");
 			LocalDate dateArr = LocalDate.parse(scan.nextLine());
 			System.out.println("Nombre de nuits : ");
 			int nbNuits = scan.nextInt(); scan.nextLine();
 			LocalDate dateDep = dateArr.plusDays(nbNuits);
-			double montant = nbPersonnes * nbNuits * chambre.getTarif();
-			int id = Hotel.listeDesReservations.size();
-			new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);
-			System.out.println("Chambre n°" + chambre.getNum() + " réservée.");
-			System.out.println(Hotel.listeDesReservations.get(Hotel.listeDesReservations.size()-1).toStr());
-			Hotel.reserverChambre(chambre.getNum());
+			if (Hotel.reservationPossibleTypePeriode(choixType, dateArr, dateDep) == true) {
+				Chambre chambre = Hotel.chambreLibreTypePeriode(choixType, dateArr, dateDep);
+				double montant = nbPersonnes * nbNuits * chambre.getTarif();
+				int id = Hotel.listeDesReservations.size();
+				new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);
+				System.out.println("Chambre n°" + chambre.getNum() + " réservée.");
+				System.out.println(Hotel.listeDesReservations.get(Hotel.listeDesReservations.size()-1).toStr());
+				Hotel.reserverChambre(chambre.getNum());
+			} else {
+				System.out.println("Réservation impossible, chambre occupée à cette période");
+			}
 		} else {
 			System.out.println("Identification échouée.");
 		}

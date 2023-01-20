@@ -1,4 +1,5 @@
 package afpaJava_231019_projet_hotel;
+import java.security.KeyStore.TrustedCertificateEntry;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -11,13 +12,10 @@ public class DemoHotel {
 		
 		creationClients();
 
-		creationReservations(20);
+		creationReservations(1000);
 		// --- ! --- gérer les conflits de réservation ------------------
 
 		Menu.afficherMenu("");
-		
-		
-		
 		
 		
 	}
@@ -65,13 +63,17 @@ public class DemoHotel {
 	public static void creationReservations(int n) {
 		for (int id = 0; id < n; id++) {
 			Client client = Hotel.listeDesClients.get(nAlea(0, Hotel.listeDesClients.size()));
-			Chambre chambre = Hotel.listeDesChambres.get(nAlea(0, Hotel.listeDesChambres.size()));
 			int nbPersonnes = nAlea(1, 4);
-			LocalDate dateArr = LocalDate.of(nAlea(2022, 2024)-1, 1, 1).plusDays(nAlea(1, 365*2));
+			LocalDate dateArr = LocalDate.of(nAlea(2022, 2023), 1, 1).plusDays(nAlea(1, 365*2));
 			LocalDate dateDep = dateArr.plusDays(nAlea(1, 7));	
-			double montant = nbPersonnes*chambre.getTarif()*ChronoUnit.DAYS.between(dateArr, dateDep);		
-			
-			new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);
+			String type = Hotel.listeType[nAlea(1, 4)];
+			if (Hotel.reservationPossibleTypePeriode(type, dateArr, dateDep) == true) {
+				Chambre chambre = Hotel.chambreLibreTypePeriode(type, dateArr, dateDep);
+				double montant = nbPersonnes*chambre.getTarif()*ChronoUnit.DAYS.between(dateArr, dateDep);		
+				new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);				
+			} else {
+				System.out.println("reserv impossible");
+			}
 		}
 	}
 	
