@@ -19,7 +19,7 @@ public class Menu {
 								  "F: Réserver une chambre",
 								  "G: Libérer une chambre", 
 								  " ", 
-								  "H : Afficher liste réservations -------- cas à traiter",
+								  "H : Afficher liste réservations",
 								  "I : Afficher liste clients",
 								  "J : Afficher liste des chambres",
 								  " ",
@@ -210,9 +210,6 @@ public class Menu {
 			int nbPersonnes = scan.nextInt(); scan.nextLine();
 			selectionType();
 			String choixType = typeSelectionne();
-			// refonder la méthode numPremiereChambreVide(choixtype, dateArr, dateDep)
-			// d'abord checker si un tye de chambre est libre pour une période donnée
-//			Chambre chambre = Hotel.listeDesChambres.get(Hotel.numPremiereChambreVide(choixType));  
 			System.out.println("Date d'entrée : (format AAAA-MM-JJ)");
 			LocalDate dateArr = LocalDate.parse(scan.nextLine());
 			System.out.println("Nombre de nuits : ");

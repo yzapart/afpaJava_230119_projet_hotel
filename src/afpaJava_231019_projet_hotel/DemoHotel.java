@@ -72,7 +72,7 @@ public class DemoHotel {
 				double montant = nbPersonnes*chambre.getTarif()*ChronoUnit.DAYS.between(dateArr, dateDep);		
 				new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);				
 			} else {
-				System.out.println("reserv impossible");
+				System.out.println("Réservation impossible");
 			}
 		}
 	}
