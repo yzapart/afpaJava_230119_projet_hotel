@@ -21,13 +21,12 @@ public class Menu {
 								  " ", 
 								  "H : Afficher liste réservations",
 								  "I : Afficher liste clients",
-								  "J : Afficher liste des chambres  -- à traiter setEtat() en fontion de la date du jour",
+								  "J : Afficher liste des chambres",
 								  " ",
 								  "K : Etat d'une chambre à une date",
 								  "L : Chiffre d'affaires",
 								  " ",
 								  "Q: Quitter",
-								  " ",
 								  
 								};
 

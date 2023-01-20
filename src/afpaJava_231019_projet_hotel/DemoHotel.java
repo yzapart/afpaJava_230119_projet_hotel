@@ -1,5 +1,4 @@
 package afpaJava_231019_projet_hotel;
-import java.security.KeyStore.TrustedCertificateEntry;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -15,6 +14,8 @@ public class DemoHotel {
 		creationReservations(1000);
 		// --- ! --- gérer les conflits de réservation ------------------
 
+		rafraichirEtatChambres();
+		
 		Menu.afficherMenu("");
 		
 		
@@ -77,6 +78,16 @@ public class DemoHotel {
 		}
 	}
 	
-	
+	public static void rafraichirEtatChambres() {
+		LocalDate dateDuJour = LocalDate.now();
+		for (Chambre chambre : Hotel.listeDesChambres) {
+			if (Hotel.existeReservationChambreDate(chambre, dateDuJour) == true) {
+				chambre.setEtat(true);				
+			} else {
+				chambre.setEtat(false);
+			}
+		}
+		
+	}
 	
 }
