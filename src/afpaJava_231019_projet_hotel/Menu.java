@@ -173,16 +173,14 @@ public class Menu {
 	}
 
 	// afficher n° première chambre vide
+	// pas bon : trier en fonction de num chambre tout simplment
 	static void menu4() {
 		cls();
 		selectionType();
 		String choixType = typeSelectionne();
-		// réservations triéées par date de sortie descendante:
-		ArrayList<Reservation> 	temp = Hotel.listeDesReservations;
-		Collections.sort(temp, Comparator.comparing(Reservation::getDateDep).reversed());
-		for (Reservation r : temp) {
-			if ((r.getChambre().getType().equals(choixType) == true) && (r.getChambre().getEtat() == false)) {
-				System.out.println("Première chambre type " + choixType + " vide : chambre n° " + r.getChambre().getNum());
+		for (Chambre c : Hotel.listeDesChambres) {
+			if ((c.getType().equals(choixType) == true) && (c.getEtat() == false)) {
+				System.out.println("Première chambre type " + choixType + " vide : chambre n° " + c.getNum());
 				break;
 			}
 		}
@@ -194,9 +192,14 @@ public class Menu {
 		cls();
 		selectionType();
 		String choixType = typeSelectionne();
-		List<Reservation> rFilteredByType = Hotel.listeDesReservations.stream().filter( r -> r.getChambre().getType().equals(choixType) == true).collect(Collectors.toList());
-		Collections.sort(rFilteredByType, Comparator.comparing(Reservation::getDateDep).reversed());
-		System.out.println(rFilteredByType.get(0).toStr());
+		List<Reservation> rFilteredByType = Hotel.listeDesReservations.stream().filter( 	r -> r.getChambre().getType().equals(choixType) == true).collect(Collectors.toList());
+		List<Reservation> rFilteredDateDepBeforeTomorrow = rFilteredByType.stream().filter( r -> r.getDateDep().isBefore(LocalDate.now().plusDays(1)) == true).collect(Collectors.toList());
+		Collections.sort(rFilteredDateDepBeforeTomorrow, Comparator.comparing(Reservation::getDateDep).reversed());
+		if (rFilteredByType.size() != 0) {
+			System.out.println(rFilteredByType.get(0).toStr());
+		} else {
+			System.out.println("LEs chambres de type " + choixType + " n'ont pas été occupées pour l'instant.");
+		}
 		
 		retour();
 	}
