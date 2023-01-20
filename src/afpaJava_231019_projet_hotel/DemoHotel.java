@@ -11,7 +11,7 @@ public class DemoHotel {
 		
 		creationClients();
 
-		creationReservations(5);
+		creationReservations(300);
 
 		rafraichirEtatChambres();
 		
