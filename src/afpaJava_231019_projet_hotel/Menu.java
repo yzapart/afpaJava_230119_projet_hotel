@@ -2,7 +2,6 @@ package afpaJava_231019_projet_hotel;
 
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.security.KeyStore.TrustedCertificateEntry;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,8 +15,8 @@ public class Menu {
 								  "B: Afficher le nombre de chambres réservées",
 								  "C: Afficher le nombre de chambres libres", 
 								  " ", 
-								  "D: Afficher le numéro de la première chambre vide -- à refaire",
-								  "E: Afficher le numéro de la dernière chambre occupée -- à refaire", 
+								  "D: Afficher le numéro de la première chambre vide",
+								  "E: Afficher le numéro de la dernière chambre occupée", 
 								  " ", 
 								  "F: Réserver une chambre",
 								  "G: Libérer une chambre", 
@@ -27,7 +26,7 @@ public class Menu {
 								  "J : Afficher liste des chambres",
 								  " ",
 								  "K : Etat d'une chambre à une date",
-								  "L : Chiffre d'affaires -- erreur à corriger",
+								  "L : Chiffre d'affaires",
 								  " ",
 								  "Q: Quitter",
 								  
@@ -174,7 +173,6 @@ public class Menu {
 	}
 
 	// afficher n° première chambre vide
-	// ==============================================  !  pas bon, mauvaise méthode ! ===
 	static void menu4() {
 		cls();
 		selectionType();
@@ -185,6 +183,7 @@ public class Menu {
 		for (Reservation r : temp) {
 			if ((r.getChambre().getType().equals(choixType) == true) && (r.getChambre().getEtat() == false)) {
 				System.out.println("Première chambre type " + choixType + " vide : chambre n° " + r.getChambre().getNum());
+				break;
 			}
 		}
 		retour();
@@ -195,7 +194,10 @@ public class Menu {
 		cls();
 		selectionType();
 		String choixType = typeSelectionne();
-		// à refaire
+		List<Reservation> rFilteredByType = Hotel.listeDesReservations.stream().filter( r -> r.getChambre().getType().equals(choixType) == true).collect(Collectors.toList());
+		Collections.sort(rFilteredByType, Comparator.comparing(Reservation::getDateDep).reversed());
+		System.out.println(rFilteredByType.get(0).toStr());
+		
 		retour();
 	}
 	
@@ -302,17 +304,18 @@ public class Menu {
 	
 	
 	// calcul des loyers et CA
-	static void menu12() {
+	static void menu12() {		
 		cls();
 		System.out.println("Année du CA à calculer :");
 		int year = scan.nextInt(); scan.nextLine();
 		int CA = 0;
-		for (Reservation r: Hotel.listeDesReservations) {
-			List<LocalDate> listeDates = LocalDate.of(year, 01, 01).datesUntil(LocalDate.of(year+1, 01, 01)).collect(Collectors.toList());
-			for (LocalDate date: listeDates) {
+		List<LocalDate> listeDates = LocalDate.of(year, 01, 01).datesUntil(LocalDate.of(year+1, 01, 01)).collect(Collectors.toList());
+		for (LocalDate date : listeDates) {
+			for (Chambre chambre : Hotel.listeDesChambres) {
 				int loyer = 0;
-				if (Hotel.existeReservationChambreDate(r.getChambre(), date) == true) {
-					loyer = Hotel.reservationChambreDate(r.getChambre(), date).getNbPersonnes() * r.getChambre().getTarif();
+				if (Hotel.existeReservationChambreDate(chambre, date) == true) {
+					Reservation r = Hotel.reservationChambreDate(chambre, date);
+					loyer = r.getNbPersonnes() * chambre.getTarif();
 					System.out.println("Réservation n° " + r.getId() + "\t" + r.getClient().getType() + " : " + r.getClient().getNom() +  "\tChambre n°" + r.getChambre().getNum() + "\tDate : " + date + "\tLoyer : " + loyer + " €");
 				}
 				CA += loyer;
@@ -320,7 +323,9 @@ public class Menu {
 		}
 		System.out.println("CA " + year + " : " + CA + " €");
 		retour();
-	}
+	} 
+		
+		
 
 	static void menuQ() {
 		cls();

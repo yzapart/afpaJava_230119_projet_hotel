@@ -37,8 +37,11 @@ public class Hotel {
 		System.out.println("----------------------------");
 	}
 	
-	public static void afficherListeDesReservations() {
+	public static void trierListeDesReservations() {
 		Collections.sort(listeDesReservations, Comparator.comparing(Reservation::getDateArr));
+	}
+	
+	public static void afficherListeDesReservations() {
 		System.out.println("--- Liste des réservations : ---");
 		for (Reservation r : listeDesReservations) {
 			System.out.println(r.toStr());
@@ -46,6 +49,17 @@ public class Hotel {
 		System.out.println("----------------------------");
 	}
 	
+	public static void rafraichirEtatChambres() {
+		LocalDate dateDuJour = LocalDate.now();
+		for (Chambre chambre : Hotel.listeDesChambres) {
+			if (Hotel.existeReservationChambreDate(chambre, dateDuJour) == true) {
+				chambre.setEtat(true);				
+			} else {
+				chambre.setEtat(false);
+			}
+		}
+		
+	}
 	
 
 	public static int nbChambresReservees() {

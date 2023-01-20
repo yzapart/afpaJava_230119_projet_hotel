@@ -19,6 +19,8 @@ public class Reservation {
 		this.montant = montant;
 		this.nbPersonnes = nbPersonnes;
 		Hotel.listeDesReservations.add(this);
+		Hotel.trierListeDesReservations();
+		Hotel.rafraichirEtatChambres();
 	}
 	
 	public int getId() {
@@ -52,6 +54,11 @@ public class Reservation {
 	
 	public String toStr() {
 		return "Réservation n° " + id + "\t" + client.getType() + " : " + client.getNom() + "\tChambre n° " + chambre.getNum() + "\t"+ chambre.getType() + "\t" + nbPersonnes + "pers.\tA: "  + dateArr + "\tD: " + dateDep + "\tMontant : " + montant + " €";
+	}
+
+	public Object filter(Object object) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -2,6 +2,7 @@ package afpaJava_231019_projet_hotel;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+
 public class DemoHotel {
 	static int N_CHAMBRES = 20;
 
@@ -11,13 +12,11 @@ public class DemoHotel {
 		
 		creationClients();
 
-		creationReservations(300);
-
-		rafraichirEtatChambres();
+		creationReservations(400);
 		
 		Menu.afficherMenu("");
 		
-		
+
 	}
 
 	
@@ -76,17 +75,6 @@ public class DemoHotel {
 			}
 		}
 	}
-	
-	public static void rafraichirEtatChambres() {
-		LocalDate dateDuJour = LocalDate.now();
-		for (Chambre chambre : Hotel.listeDesChambres) {
-			if (Hotel.existeReservationChambreDate(chambre, dateDuJour) == true) {
-				chambre.setEtat(true);				
-			} else {
-				chambre.setEtat(false);
-			}
-		}
-		
-	}
+
 	
 }
