@@ -2,8 +2,11 @@ package afpaJava_231019_projet_hotel;
 
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.security.KeyStore.TrustedCertificateEntry;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Menu {
@@ -12,9 +15,9 @@ public class Menu {
 								  " ", 
 								  "B: Afficher le nombre de chambres réservées",
 								  "C: Afficher le nombre de chambres libres", 
-//								  " ", 
-//								  "D: Afficher le numéro de la première chambre vide",
-//								  "E: Afficher le numéro de la dernière chambre occupée", 
+								  " ", 
+								  "D: Afficher le numéro de la première chambre vide -- à refaire",
+								  "E: Afficher le numéro de la dernière chambre occupée -- à refaire", 
 								  " ", 
 								  "F: Réserver une chambre",
 								  "G: Libérer une chambre", 
@@ -24,7 +27,7 @@ public class Menu {
 								  "J : Afficher liste des chambres",
 								  " ",
 								  "K : Etat d'une chambre à une date",
-								  "L : Chiffre d'affaires",
+								  "L : Chiffre d'affaires -- erreur à corriger",
 								  " ",
 								  "Q: Quitter",
 								  
@@ -171,12 +174,19 @@ public class Menu {
 	}
 
 	// afficher n° première chambre vide
+	// ==============================================  !  pas bon, mauvaise méthode ! ===
 	static void menu4() {
 		cls();
 		selectionType();
 		String choixType = typeSelectionne();
-		String res = Hotel.numPremiereChambreVide(choixType) == 999 ? "Aucune chambre libre type " + choixType : Integer.toString(Hotel.numPremiereChambreVide(choixType));
-		System.out.println("N° première chambre vide (type " + choixType + ")\t: " + res);
+		// réservations triéées par date de sortie descendante:
+		ArrayList<Reservation> 	temp = Hotel.listeDesReservations;
+		Collections.sort(temp, Comparator.comparing(Reservation::getDateDep).reversed());
+		for (Reservation r : temp) {
+			if ((r.getChambre().getType().equals(choixType) == true) && (r.getChambre().getEtat() == false)) {
+				System.out.println("Première chambre type " + choixType + " vide : chambre n° " + r.getChambre().getNum());
+			}
+		}
 		retour();
 	}
 	
@@ -185,8 +195,7 @@ public class Menu {
 		cls();
 		selectionType();
 		String choixType = typeSelectionne();
-		String res = Hotel.numDerniereChambreOccupee(choixType) == 999 ? "Aucune chambre occupée type " + choixType : Integer.toString(Hotel.numDerniereChambreOccupee(choixType));
-		System.out.println("N° dernière chambre occupée (type " + choixType + ")\t: " + res);
+		// à refaire
 		retour();
 	}
 	

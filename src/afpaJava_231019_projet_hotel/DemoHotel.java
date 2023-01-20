@@ -11,8 +11,7 @@ public class DemoHotel {
 		
 		creationClients();
 
-		creationReservations(1000);
-		// --- ! --- gérer les conflits de réservation ------------------
+		creationReservations(5);
 
 		rafraichirEtatChambres();
 		
