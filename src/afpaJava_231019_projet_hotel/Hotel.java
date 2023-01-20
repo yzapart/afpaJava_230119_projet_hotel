@@ -120,12 +120,12 @@ public class Hotel {
 		return max;
 	}
 
-	public static void reserverChambre(int num) {
-		for (Chambre c : listeDesChambres) {
-			if (c.getNum() == num)
-				c.setEtat(true);
-		}
-	}
+//	public static void reserverChambre(int num) {
+//		for (Chambre c : listeDesChambres) {
+//			if (c.getNum() == num)
+//				c.setEtat(true);
+//		}
+//	}
 
 	public static void libererChambre(int num) {
 		for (Chambre c : listeDesChambres) {

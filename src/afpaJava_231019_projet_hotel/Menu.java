@@ -231,7 +231,6 @@ public class Menu {
 				new Reservation(id, client, chambre, nbPersonnes, dateArr, dateDep, montant);
 				System.out.println("Chambre n°" + chambre.getNum() + " réservée.");
 				System.out.println(Hotel.listeDesReservations.get(Hotel.listeDesReservations.size()-1).toStr());
-				Hotel.reserverChambre(chambre.getNum());
 			} else {
 				System.out.println("Réservation impossible, chambre occupée à cette période");
 			}
